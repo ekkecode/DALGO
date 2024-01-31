@@ -1,0 +1,11 @@
+debug/main.o
+debug/mainwindow.o
+debug/torngrafik.o
+debug/towers.o
+debug/towersstate.o
+debug/studentsTreTorn1.o
+debug/studentsTreTorn2.o
+debug/qrc_resources.o
+debug/moc_mainwindow.o
+debug/moc_torngrafik.o
+debug/moc_towers.o

@@ -1,0 +1,11 @@
+release/main.o
+release/mainwindow.o
+release/torngrafik.o
+release/towers.o
+release/towersstate.o
+release/studentsTreTorn1.o
+release/studentsTreTorn2.o
+release/qrc_resources.o
+release/moc_mainwindow.o
+release/moc_torngrafik.o
+release/moc_towers.o

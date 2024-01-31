@@ -1,0 +1,14 @@
+release/main.o
+release/stuff.o
+release/student1.o
+release/student2reference.o
+release/student3swaps.o
+release/student4thoughtreading.o
+release/student5Sortings.o
+release/student6tidtagningsexperiment.o
+release/ragnarstest1.o
+release/ragnarstest2.o
+release/ragnarstest3.o
+release/ragnarstest4.o
+release/ragnarstest5.o
+release/dalgorandom.o

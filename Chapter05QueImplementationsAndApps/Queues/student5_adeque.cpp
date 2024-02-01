@@ -12,60 +12,62 @@ const char* nameOfStudentADeque(){
 
 ADeque::ADeque()
 {
-    this->m_size = 0;
-    this->m_capacity = 1;
-    this->m_IndexFront = 0;
-    this->m_pArr = new float[this->m_capacity];
+    m_size = 0;
+    m_capacity = 1;
+    m_IndexFront = 0;
+    m_pArr = new float[this->m_capacity];
 }
 
 ADeque::~ADeque()
 {
-    delete [] this->m_pArr;
+    delete [] m_pArr;
 }
 
 void ADeque::pushBack(float value)
 {
-    if (this->m_size == this->m_capacity)
-        this->expandArray();
+    if (m_size == m_capacity)
+        expandArray();
 
-    this->m_pArr[nextIndex(getIndexOfBack())] = value;
-    this->m_size += 1;
+    m_pArr[nextIndex(getIndexOfBack())] = value;
+    m_size += 1;
 }
 
 void ADeque::pushFront(float value)
 {
-    if (this->m_size == this->m_capacity)
-        this->expandArray();
+    if (m_size == m_capacity)
+        expandArray();
 
-    const int newIndex = priorIndex(this->m_IndexFront);
+    const int newIndex = priorIndex(m_IndexFront);
 
-    this->m_pArr[newIndex] = value;
-    this->m_IndexFront = newIndex;
+    m_pArr[newIndex] = value;
+    m_IndexFront = newIndex;
 
-    this->m_size += 1;
+    m_size += 1;
 }
 
 void ADeque::popBack()
 {
-    assert(this->m_size > 0);
-    this->m_size -= 1;
+    assert(m_size > 0);
+    m_size -= 1;
 }
 
 void ADeque::popFront()
 {
-    assert(this->m_size > 0);
-    this->m_IndexFront = nextIndex(this->m_IndexFront);
-    this->m_size -= 1;
+    assert(m_size > 0);
+    m_IndexFront = nextIndex(this->m_IndexFront);
+    m_size -= 1;
 }
 
 float &ADeque::back()
 {
+    assert(m_size > 0);
     return this->m_pArr[getIndexOfBack()];
 }
 
 float &ADeque::front()
 {
-    return this->m_pArr[this->m_IndexFront];
+    assert(m_size > 0);
+    return this->m_pArr[m_IndexFront];
 }
 
 int ADeque::size() const
@@ -78,13 +80,13 @@ int ADeque::size() const
 int ADeque::priorIndex(const int index)
 {
     assert(index >= 0);
-    return (index == 0) ? this->m_capacity - 1 : index - 1;
+    return (index == 0) ? m_capacity - 1 : index - 1;
 }
 
 int ADeque::nextIndex(const int index)
 {
-    assert(index < this->m_capacity);
-    return (index+1)%this->m_capacity;
+    assert(index < m_capacity);
+    return (index+1)%m_capacity;
     //return (index == this->m_capacity - 1) ? 0 : index + 1;
 }
 
@@ -98,7 +100,7 @@ int ADeque::nextIndex(const int index)
  ***************************************************************/
 int ADeque::getRelativeIndex(const int index)
 {
-    return (this->m_IndexFront + index - 1)%this->m_capacity;
+    return (m_IndexFront + index)%this->m_capacity;
 }
 
 void ADeque::expandArray()
@@ -110,23 +112,23 @@ void ADeque::expandArray()
     {
         //Fråga? Vilken är bäst?
 
-        //const int index = nextIndex((this->m_IndexFront + i - 1)%this->m_capacity);
-        const int index = nextIndex(getRelativeIndex(i));
+        //const int index = nextIndex((m_IndexFront + i - 1)%m_capacity);
+        const int index = nextIndex(getRelativeIndex(i - 1));
 
         newArr[i] = this->m_pArr[index];
     }
 
-    this->m_IndexFront = 0;
-    this->m_capacity = newCapacity;
+    m_IndexFront = 0;
+    m_capacity = newCapacity;
 
-    delete [] this->m_pArr;
-    this->m_pArr = newArr;
+    delete [] m_pArr;
+    m_pArr = newArr;
 }
 
 int ADeque::getIndexOfBack()
 {
-    if (this->m_size == 1) return this->m_IndexFront;
-    return (this->m_IndexFront + this->m_size - 1)%this->m_capacity;
+    //assert(m_size > 0);
+    return (m_IndexFront + this->m_size - 1)%this->m_capacity;
 }
 
 void ADeque::testing()

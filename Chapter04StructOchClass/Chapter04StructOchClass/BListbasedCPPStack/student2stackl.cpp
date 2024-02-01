@@ -36,7 +36,7 @@ StackL::StackL(const StackL& theOther)
     Link* priorLink = this->m_pTop;
 
     //Loops throuh all remaining links
-    for (int i = 1; i < theOther.size(); i++)
+    for (int i = 1; i < this->m_size; i++)
     {
         priorLink->m_pNext = new Link;
         priorLink->m_pNext->m_data = oldLink->m_data;

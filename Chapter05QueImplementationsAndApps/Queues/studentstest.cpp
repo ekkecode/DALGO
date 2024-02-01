@@ -16,6 +16,27 @@ void studentstest(){
     //return;
     cout << "Haer boer studentens testrsultat synas" << endl;
 
+    LQue lque;
+
+    for (int i = 0; i < 10; i++)
+    {
+        lque.pushBack(i);
+        cout << "Back now is: " << lque.back() << endl;
+    }
+
+    cout << "Front now is: " << lque.front() << endl;
+
+    for (int i = 0; i < 5; i++)
+    {
+        lque.popFront();
+         cout << lque.front() << endl;
+    }
+
+
+
+
+
+    return;
     ADeque que;
 
     for (int i = 0; i < 10; i++)

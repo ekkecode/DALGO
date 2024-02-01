@@ -111,7 +111,7 @@ bool applyParsingAlgorithm(const std::vector<Token> &tokens, std::vector<float> 
                         popAndOperate(stackOfValues, stackOfOperators);
                     }
 
-                    //Removes the ')'
+                    //Removes the '('
                     stackOfOperators.pop_back();
                 }
             }
@@ -131,7 +131,7 @@ bool applyParsingAlgorithm(const std::vector<Token> &tokens, std::vector<float> 
             if (!isLegalOp(stackOfOperators.back())) break;
             //Om varken back() är '=' eller om back() har minst högre prio, ska vi sluta räkna
             if (stackOfOperators.back() != '=' && tokenPrio > priorityOfOp(stackOfOperators.back())) break;
-            if (stackOfValues.size() < 2) break;;
+            if (stackOfValues.size() < 2) break;
 
             popAndOperate(stackOfValues, stackOfOperators);
         }

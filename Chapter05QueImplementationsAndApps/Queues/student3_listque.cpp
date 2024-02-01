@@ -9,60 +9,106 @@ const char* nameOfStudentLQue()
 
 LQue::LQue()
 {
-    this->m_size = 0;
-    this->m_pFront;
-    this->m_pBack;
-
-    this->m_pBack->m_pNext = this->m_pFront;
+    m_size = 0;
+    m_pFront = nullptr;
+    m_pBack = nullptr;
 }
 
 LQue::~LQue()
 {
     for (int i = 0; i < this->m_size; i++)
     {
-
+        popFront();
     }
 }
 
 void LQue::pushBack(float value)
 {
-    Link* pLink;
+    Link* pLink = new Link(value);
+    pLink->m_pPrior = nullptr;
+
+    //Specialfall 1: 0 element (Helt oberoende)
+    if (m_size == 0)
+    {
+        //Finns 1 element pekar både front och back på det
+        m_pFront = pLink;
+        m_pBack = pLink;
+        m_size += 1;
+        return;
+    }
+
+    //Speciallfall 2: ett element
+    else if (m_size == 1)
+    {
+        //Ska 2 element finnas är det som vanligt, förutom följande:
+        m_pBack = pLink;
+
+        m_pBack->m_pNext = m_pFront;
+        m_pFront->m_pPrior = m_pBack;
+        m_size += 1;
+        return;
+    }
+    else
+    {
+        //Generellt
+        m_pBack->m_pPrior = pLink;
+        pLink->m_pNext = m_pBack;
+
+        m_pBack = pLink;
+        m_size += 1;
+    }
 
 
-
-    this->m_pBack = pLink;
-    this->m_size += 1;
 }
 
 float &LQue::back()
 {
-    if (this->m_size == 1) return this->m_pBack->m_value;
-    return this->m_pBack->m_value;
+    assert(m_size > 0);
+    return m_pBack->m_value;
 }
 
 void LQue::popFront()
 {
     assert(m_size>0);
 
-    //If front is null, and size != 0. Then pBack is the only element left.
-    if (this->m_pFront == nullptr)
+    //pBack and pFront points to the element, and the que will now be empty
+    if (m_size == 1)
     {
-        this->m_pBack = nullptr;
-        this->m_size = 0;
+        delete m_pFront;
+
+        m_pBack = nullptr;
+        m_pFront = nullptr;
+        m_size = 0;
         return;
     }
 
-    this->m_pFront = nullptr;
-    this->m_size -= 1;
+    //Que will be size 1, pFront and pBack will point towards the last element
+    else if (m_size == 2)
+    {
+        delete m_pFront;
+
+        m_pFront = m_pBack;
+        m_pFront->m_pNext = nullptr;
+        m_pFront->m_pPrior = nullptr;
+        m_size = 1;
+
+        return;
+    }
+    else
+    {
+        Link* pNewFront = m_pFront->m_pPrior;
+        delete m_pFront;
+        m_pFront = pNewFront;
+
+        m_pFront->m_pNext = nullptr;
+        m_size -= 1;
+    }
 }
 
 float &LQue::front()
 {
     assert(m_size > 0);
-
-    if (this->m_pFront == nullptr)
-        return this->m_pBack->m_value;
-    return this->m_pFront->m_value;
+    return m_pFront->m_value;
 }
 
 int LQue::size() const

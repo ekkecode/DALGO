@@ -22,9 +22,9 @@ int main(int argc, char *argv[])
 
     studentstest();
 
-    bool testAQue  = false;    // Ange vilka tester du vill genomföra !
+    bool testAQue  = true;    // Ange vilka tester du vill genomföra !
     bool testLQue   = true;
-    bool testADeque   = false;
+    bool testADeque   = true;
 
     ragnarsTest(testAQue, testLQue, testADeque);
 

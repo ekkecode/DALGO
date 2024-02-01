@@ -59,16 +59,12 @@ float &AStack::back()
 void AStack::popBack()
 {
     this->m_size -= 1;
-
 }
 
 int AStack::size() const
 {
     return this->m_size;
 }
-
-
-
 
 void studentTest2()
 {

@@ -9,18 +9,31 @@
 
 
 const char* nameOfStudent4(){
-    return "Homer Simpson";
+    return "Emil Kronholm";
 }
 
 /**************************************************************************
  * Fler uppgifter.
  **************************************************************************/
 
-bool hasPathToTarget(Node *pTree){
-  // Funktionen anropas när man kontextklickar på en nod och
-  // väljer detta menyalternativ.
-  return true; //TODO trag bort denna rad
+bool hasPathToTarget(Node *pTree)
+{
+    if (pTree == nullptr) return false;
 
+    pTree->flash();
+
+    if (pTree->isTarget())
+    {
+        pTree->makeRed();
+        return true;
+    }
+    else if (hasPathToTarget(pTree->m_pLeft) || hasPathToTarget(pTree->m_pRight))
+    {
+        pTree->makeRed();
+        return true;
+    }
+
+    return false;
 }
 
 bool didFind500(Node *pTree){

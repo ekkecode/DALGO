@@ -31,13 +31,16 @@ void recursiveFill(int r, int k, IDrawingParent *pImage, QColor colorOld, QColor
 
     //Blir evighetsloop annars
     if (colorOld == colorNew) return;
-    //Top
-    CheckAndRecurve(r + 1, k, pImage, colorOld, colorNew);
-    //Bottom
-    CheckAndRecurve(r - 1, k, pImage, colorOld, colorNew);
-    //Right
-    CheckAndRecurve(r, k + 1, pImage, colorOld, colorNew);
-    //Left
-    CheckAndRecurve(r, k - 1, pImage, colorOld, colorNew);
 
+    if ((*pImage).isInside(r, k) && (*pImage).pixel(r, k) == colorOld)
+    {
+        (*pImage).setPixel(r, k, colorNew);
+        CheckAndRecurve(r + 1, k, pImage, colorOld, colorNew);
+        //Bottom
+        CheckAndRecurve(r - 1, k, pImage, colorOld, colorNew);
+        //Right
+        CheckAndRecurve(r, k + 1, pImage, colorOld, colorNew);
+        //Left
+        CheckAndRecurve(r, k - 1, pImage, colorOld, colorNew);
+    }
 }

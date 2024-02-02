@@ -8,8 +8,6 @@ const char* nameOfStudentADeque(){
     return "Emil Kronholm";
 }
 
-
-
 ADeque::ADeque()
 {
     m_size = 0;
@@ -79,13 +77,13 @@ int ADeque::size() const
 
 int ADeque::priorIndex(const int index)
 {
-    assert(index >= 0);
+    //assert(index >= 0);
     return (index == 0) ? m_capacity - 1 : index - 1;
 }
 
 int ADeque::nextIndex(const int index)
 {
-    assert(index < m_capacity);
+    //assert(index < m_capacity);
     return (index+1)%m_capacity;
     //return (index == this->m_capacity - 1) ? 0 : index + 1;
 }
@@ -96,7 +94,7 @@ int ADeque::nextIndex(const int index)
  *
  * getRelativeIndex(0) should return m_startindex;
  * getRelativeIndex(1) returns the index of the second element
- * getRelativeIndex(7) returns the index of the 7th element
+ * getRelativeIndex(7) returns the index of the 8th element
  ***************************************************************/
 int ADeque::getRelativeIndex(const int index)
 {

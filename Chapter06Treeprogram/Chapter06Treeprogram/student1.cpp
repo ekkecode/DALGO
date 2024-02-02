@@ -44,17 +44,17 @@ void flashInOrder(Node *pTree)
 {
   if (pTree == nullptr) return;
 
-  flashPreOrder(pTree->m_pLeft);
+  flashInOrder(pTree->m_pLeft);
   pTree->flash();
-  flashPreOrder(pTree->m_pRight);
+  flashInOrder(pTree->m_pRight);
 }
 
 void flashPostOrder(Node *pTree)
 {
   if (pTree == nullptr) return;
 
-  flashPreOrder(pTree->m_pLeft);
-  flashPreOrder(pTree->m_pRight);
+  flashPostOrder(pTree->m_pLeft);
+  flashPostOrder(pTree->m_pRight);
   pTree->flash();
 }
 
@@ -86,8 +86,6 @@ void flashNodesAtIncreasingDepth(Node *pTree)
             queue.push_back(tree->m_pRight);
     }
 }
-
-
 // Nedanstående funktioner bör vara rekursiva.
 // De kan då implementeras med några få raders kod.
 
@@ -102,8 +100,6 @@ int height(Node *pTree)
     pTree->flash();
 
     if (pTree == nullptr) return -1;
-    if (pTree->m_pLeft == nullptr && pTree->m_pRight == nullptr)
-        return 0;
 
     const int heightLeft = height(pTree->m_pLeft);
     const int heightRight = height(pTree->m_pRight);

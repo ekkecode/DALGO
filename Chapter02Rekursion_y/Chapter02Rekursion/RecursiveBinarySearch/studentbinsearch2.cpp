@@ -16,19 +16,15 @@ const char* nameOfStudent2(){
 
 const float* pointerToFirstElementGreaterOrEqualToX(float x, const float* pBegin, const float* pEnd)
 {
-    //2 BaseCases
-
-    //If no elements are inside, return pEnd.
     if (pBegin >= pEnd) return pEnd;
-
-    //If there the array contains single element, return it if its >= to X, otherwise return pEnd
     if (pEnd - pBegin == 1)
     {
-        if (*pBegin >= x) return pBegin;
-        else return pEnd;
+        return (*pBegin >= x) ? pBegin : pEnd;
     }
 
-    const float* pMiddle = pEnd - (pEnd - pBegin)/2;
+    //pMiddle can only equal to pBegin if pEnd-pBegin is 0 or 1.
+    //Both is base cases
+    const float* pMiddle = pBegin + (pEnd - pBegin)/2;
 
     if (*(pMiddle-1) < x && *pMiddle >= x) return pMiddle;
 

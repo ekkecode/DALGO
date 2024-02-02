@@ -61,6 +61,9 @@ void removeKeyFromSearchtree(Node* &pTree, int key)
 
             delete pOldNode;
         }
+        //2 barn.
+        //Byt ut till den minsta noden på högersidan och ta bort den
+        //Med rekursion
         else
         {
             pTree->m_key = nodeWithMinimumKey(pTree->m_pRight)->m_key;

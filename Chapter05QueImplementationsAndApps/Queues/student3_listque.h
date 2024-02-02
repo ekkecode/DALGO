@@ -14,7 +14,6 @@ class LQue
         Link(float value=0, Link *pNext=nullptr) : m_value(value), m_pNext(pNext) {}
         float m_value;
         Link *m_pNext;
-        Link *m_pPrior;
     };
 
     Link  *m_pFront;

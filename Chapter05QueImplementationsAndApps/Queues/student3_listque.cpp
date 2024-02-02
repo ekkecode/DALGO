@@ -2,6 +2,106 @@
 #include "assert.h"
 
 
+#include "student3_listque.h"
+#include "assert.h"
+
+
+const char* nameOfStudentLQue()
+{
+    return "Emil Kronholm";
+}
+
+LQue::LQue()
+{
+    m_size = 0;
+    m_pFront = nullptr;
+    m_pBack = nullptr;
+}
+
+LQue::~LQue()
+{
+    for (int i = 0; i < this->m_size; i++)
+    {
+        popFront();
+    }
+}
+
+/*void LQue::pushBack(float value)
+{
+    if (m_size == 0)
+    {
+        Link* pNewLink = new Link(value);
+        m_pFront = pNewLink;
+        m_pBack = pNewLink;
+        m_size += 1;
+    }
+
+    else if (m_size == 1)
+    {
+        Link* pNewLink = new Link(value);
+        m_pFront->m_pNext = pNewLink;
+        m_pBack = pNewLink;
+        m_size += 1;
+    }
+
+    else
+    {
+        Link* pNewLink = new Link(value);
+        m_pBack->m_pNext = pNewLink;
+        m_pBack = pNewLink;
+        m_size += 1;
+    }
+}*/
+
+void LQue::pushBack(float value)
+{
+    Link* pNewLink = new Link(value);
+
+    //Specialfall
+    if (m_size == 0) m_pFront = pNewLink;
+    else m_pBack->m_pNext = pNewLink;
+
+    //Gennerellt
+    m_pBack = pNewLink;
+    m_size += 1;
+}
+
+float &LQue::back()
+{
+    return m_pBack->m_value;
+}
+
+void LQue::popFront()
+{
+    assert(m_size > 0);
+
+    Link* pOldFront = m_pFront;
+    m_pFront = m_pFront->m_pNext;
+    delete pOldFront;
+    m_size -= 1;
+
+    if (m_size == 0)
+    {
+        m_pFront = nullptr;
+        m_pBack = nullptr;
+    }
+}
+
+float &LQue::front()
+{
+    return m_pFront->m_value;
+}
+
+int LQue::size() const
+{
+    return m_size;
+}
+
+
+
+//GAMMAL !!!!
+/*
+
 const char* nameOfStudentLQue()
 {
     return "Emil Kronholm";
@@ -114,4 +214,4 @@ float &LQue::front()
 int LQue::size() const
 {
     return this->m_size;
-}
+}*/

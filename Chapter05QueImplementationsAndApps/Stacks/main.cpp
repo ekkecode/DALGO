@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
     //QCoreApplication a(argc, argv);
 
-   // studentTest2();
+    studentTest2();
 
     ragnarsTest();
 

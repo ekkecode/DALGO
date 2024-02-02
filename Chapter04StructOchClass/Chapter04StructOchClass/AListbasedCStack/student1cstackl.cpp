@@ -78,10 +78,12 @@ void CStackLPop(CStackL *pDettaObjekt)
 
     assert (pDettaObjekt->m_size > 0);
 
-    delete pDettaObjekt->m_pTop;
+    Link* pOldTop = pDettaObjekt->m_pTop;
 
     pDettaObjekt->m_pTop = pDettaObjekt->m_pTop->m_pNext;
     pDettaObjekt->m_size -= 1;
+
+    delete pOldTop;
 }
 
 int  CStackLSize(CStackL *pDettaObjekt)

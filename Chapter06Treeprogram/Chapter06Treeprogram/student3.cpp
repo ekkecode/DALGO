@@ -87,12 +87,13 @@ Node *readTreeFromStream(ifstream& infil)
 
     if (infil >> input)
     {
-        //Empty tree
+
         if (input == 'x') return nullptr;
         else if (input == 'v')
         {
+
             //Read key (read all the following number until x or v
-            string key = "";
+           /* string key = "";
             while (infil.peek() != 'x' && infil.peek() != 'v')
             {
                 char in;
@@ -101,6 +102,49 @@ Node *readTreeFromStream(ifstream& infil)
             }
 
             Node* pTree = new Node(stoi(key));
+            */
+
+            //FIFO-kö
+           /* deque<int> keys;
+            while (infil.peek() != 'x' && infil.peek() != 'v')
+            {
+                char in;
+                infil >> in;
+
+                //Convert char to int (??)
+                keys.push_back(in - '0');
+            }
+
+            int key = 0;
+
+            while (keys.size() > 0)
+            {
+                int temp = keys.front();
+                keys.pop_front();
+                //Skulle även kunna använda math.pow ?
+                for (unsigned long long int i = 0; i < keys.size(); i++)
+                {
+                    temp *= 10;
+                }
+
+                key += temp;
+            }*/
+
+            float key = 0;
+            float size = 1;
+            while (infil.peek() != 'x' && infil.peek() != 'v')
+            {
+                char in;
+                infil >> in;
+
+                //Convert char to int (??)
+                key += (in - '0')/size;
+                size *= 10;
+            }
+
+            key *= size/10;
+
+            Node* pTree = new Node(key);
             pTree->m_pLeft = readTreeFromStream(infil);
             pTree->m_pRight = readTreeFromStream(infil);
 

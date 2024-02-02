@@ -1,0 +1,10 @@
+debug/main.o
+debug/mainwindow.o
+debug/mazemodel.o
+debug/mazewidget.o
+debug/studentLabyrint1.o
+debug/studentLabyrint2.o
+debug/qrc_recources.o
+debug/moc_mainwindow.o
+debug/moc_mazemodel.o
+debug/moc_mazewidget.o

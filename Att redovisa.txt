@@ -1,0 +1,26 @@
+Att redovisa:
+
+Obligatoriska:
+
+4.1 [O] C-stack med länkad lista
+4.2 [O] C++-stack med länkad lista
+
+5.1 [O] Stack med array (Kolla igenom)
+5.4 [O] Kö med cirkulär array
+5.7 [O] Icke-rekursiv fill
+
+6.1 [O] Trädklättring 
+6.2 [O] Binärt sökträd.
+6.4 [O] Visa väg i träd
+
+
+Frivilliga:
+
+5.3 [F] LQue, kö med länkad lista
+5.5 [F] ADeque, dubbelländad kö med cirkulär array
+5.8 [F] Evaluera aritmetiskt uttryck (Kolla igenom igen)
+
+6.3 [F] Serialisering
+
+
+

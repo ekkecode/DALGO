@@ -20,8 +20,8 @@ public:
     void setPos(Position position);
     void clearPos(Position position);
 
-    std::vector<Move>  legalMoves();
-    std::vector<Move>  legalMoves(Position position);
+    std::vector<Move> legalMoves();
+    std::vector<Move> legalMoves(Position position);
     int numberOfBricks();
     State nextState(const Move& move);
     Position positionOfSingleBrick();

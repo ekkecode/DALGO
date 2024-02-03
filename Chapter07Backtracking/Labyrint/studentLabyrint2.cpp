@@ -4,6 +4,8 @@
 #include <vector>
 #include <deque>
 
+#include <iostream>
+
 using namespace std;
 
 // ANROP:  RK granne0 = rkOfNeighbor(rk, 0);
@@ -20,8 +22,10 @@ RK rkOfNeighbor(RK rk, int ixOfneighbor){
 }
 
 
-bool foundShortestPathToGoalFIFO(IMaze *pMaze, int r, int k){
+bool foundShortestPathToGoalFIFO(IMaze *pMaze, int r, int k)
+{
 
+    cout << "START VALUES - R: " << r << "   K: " << k << endl;
 
     // Nedanstående deklarationer låter jag ligga kvar (radera om du vill).
     // rkPrevious blir en 2D-matris som du kan accessa med
@@ -33,28 +37,35 @@ bool foundShortestPathToGoalFIFO(IMaze *pMaze, int r, int k){
 
     vector<vector<RK>> rkPrevious( pMaze->sizeR(), vector<RK>(pMaze->sizeK(), RK()));
     deque<RK> rkTodo;
-
     rkTodo.push_back(RK(r, k));
+    bool foundPath = false;
 
     while (rkTodo.size() > 0)
     {
+        //The RK in rkTodo will always be non-stone, non-wall and inside the matrix
         RK rk = rkTodo.front();
         rkTodo.pop_front();
+        pMaze->placeStone(rk.m_r, rk.m_k);
 
         if (pMaze->isGoal(rk.m_r, rk.m_k))
         {
-            //VI HAR FUCKING HITTAT MÅLJÄVELN
+            //Loop back through rkPrevious
             RK temp = rk;
-            while (temp.m_r != r && temp.m_k != k)
+
+            pMaze->indicateThatRKIsOnPath(rk.m_r, rk.m_k);
+            while (temp.m_r != r || temp.m_k != k)
             {
                 pMaze->indicateThatRKIsOnPath(temp.m_r, temp.m_k);
                 temp = rkPrevious[temp.m_r][temp.m_k];
             }
+
+            temp = rkPrevious[temp.m_r][temp.m_k];
+
             return true;
         }
 
-        pMaze->placeStone(rk.m_r, rk.m_k);
-
+        //Checks all four neighbours of the RK.
+        //If they are good, pushThem in the toDo
         for (int i = 0; i < 4; i++)
         {
             RK temp = rkOfNeighbor(rk, i);
@@ -64,12 +75,11 @@ bool foundShortestPathToGoalFIFO(IMaze *pMaze, int r, int k){
             if (pushback)
             {
                 rkTodo.push_back(RK(temp));
-                rkPrevious[temp.m_r][temp.m_k] = temp;
+                rkPrevious[temp.m_r][temp.m_k] = rk;
             }
         }
     }
 
-    // TODO
     return false;
 }
 

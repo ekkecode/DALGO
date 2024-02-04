@@ -33,6 +33,36 @@ std::set<Position> setOfPossibleFinalPositions(State state)
     return posOfFinals;
 }
 
+std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
+{
+    vector<Move> moves;
+
+    int startSize = moves.size();
+
+    while (true)
+    {
+        for (Move move : state.legalMoves())
+        {
+            State nextState = state.nextState(move);
+
+            if(setOfPossibleFinalPositions(nextState).count(posOfFinal) > 0)
+            {
+                moves.push_back(move);
+                state = nextState;
+                //Önskar det fanns en Continue som tog på while loopen.
+                break;
+            }
+        }
+
+        if (startSize == moves.size()) break;
+        else startSize = moves.size();
+    }
+
+    return moves;
+}
+
+
+/*
 std::vector<Move> movesInPathToFinal(State _state, Position posOfFinal)
 {
 
@@ -83,3 +113,4 @@ std::vector<Move> movesInPathToFinal(State _state, Position posOfFinal)
 
     return path;
 }
+*/

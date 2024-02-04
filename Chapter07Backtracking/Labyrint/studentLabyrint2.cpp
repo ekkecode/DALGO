@@ -38,7 +38,6 @@ bool foundShortestPathToGoalFIFO(IMaze *pMaze, int r, int k)
     vector<vector<RK>> rkPrevious( pMaze->sizeR(), vector<RK>(pMaze->sizeK(), RK()));
     deque<RK> rkTodo;
     rkTodo.push_back(RK(r, k));
-    bool foundPath = false;
 
     while (rkTodo.size() > 0)
     {

@@ -75,10 +75,10 @@ void increaseValue(int &theTime, int newTime){
 }
 
 
-//TODO implementera simulatorn!
-void simulate(int antalKassor){
 
-    cout << "---- antal Kassor " << antalKassor << " -------------------\n";
+//TODO implementera simulatorn!
+void simulate(int antalKassor)
+{
 
     std::ifstream infil;
     infil.open("../../Chapter08Heap/System/customers.txt");
@@ -88,41 +88,62 @@ void simulate(int antalKassor){
     // sorterade med avseende på m_timeToLeave.
     priority_queue<Event, vector<Event>, AWorseThanB> que;
 
+    unsigned int time = 11*60*60;
+    unsigned int ragnarLeavesAt = 0;
+    unsigned int totalWaiting = 0;
+    unsigned int totalTimeSpent = 0;
 
     Customer customer;
+
     // Nedanstående kod är felaktig/ofullständig
-    long unsigned int totalWaiting = 0;
+    while (infil >> customer)
+    {
 
-    unsigned int ragnarsWaiting = 0;
+        //Finns inte lediga kassor
+        if (!(que.size() < antalKassor))
+        {
+            time = que.top().m_timeToLeave;
+            que.pop();
+        }
 
-    while (infil >> customer){
-       // cout <<  customer.m_name << "  arrival:" <<  timestring( customer.m_arrival ) << endl;
+        //Ingen väntetid, flytta fram tiden
+        if (time < customer.m_arrival)
+        {
+            time = customer.m_arrival;
+        }
+        else
+        {
+            totalWaiting += time - customer.m_arrival;
+        }
 
-        totalWaiting += customer.m_timeSpent;
-        que.push(Event(customer.m_name, customer.m_arrival + totalWaiting));
+        totalTimeSpent += customer.m_timeSpent;
+
+        unsigned int timeToLeave = time + customer.m_timeSpent;
+        que.push(Event(customer.m_name, timeToLeave));
+
 
         if (customer.m_name == "Ragnar")
         {
-            ragnarsWaiting = totalWaiting;
+            ragnarLeavesAt = timeToLeave;
         }
     }
 
+    while (que.size() > 1) que.pop();
+    int timeOfLastLeave = que.top().m_timeToLeave;
 
+    int personhours = totalWaiting + totalTimeSpent + (timeOfLastLeave - 11*60*60)*antalKassor;
 
-    cout << "Ragnar will leave at: " << timestring(ragnarsWaiting) << endl;
+    cout << "---- antal Kassor " << antalKassor << " -------------------\n";
+    cout << "Ragnar blir klar: " << timestring(ragnarLeavesAt) << endl;
+    cout << "Total kotid: " << timestring(totalWaiting) << endl;
+    cout << "Total persontid: " << timestring(personhours) << endl;
     cout << "-----------------------------------------" << endl << endl << endl;
-
 }
 
-
-
-
-void studentSystemSimulator(){
-
-
+void studentSystemSimulator()
+{
     for (int kassor = 1; kassor <=20 ; kassor +=1)
         simulate(kassor);
-
 }
 
 
@@ -130,11 +151,57 @@ void studentSystemSimulator(){
 /********************************************************************************************
 
   GE resultatet här!
-
-
   för antalKasor=1..20
+Ragnar lämnar butiken med ... kassa vid ...
+1 [2] 05:55:00
+2 [1] 08:27:47
+3 [1] 01:18:55
+4 [0] 21:43:57
+5 [0] 19:35:51
+6 [0] 18:10:55
+7 [0] 17:26:05
+8 [0] 17:09:26
+9 [0] 17:05:06
+10 [0] 17:03:27
+11 [0] 17:02:01
+12 [0] 17:02:00
+13 [0] 17:02:00
+14 [0] 17:02:00
+15 [0] 17:02:00
+16 [0] 17:02:00
+17 [0] 17:02:00
+18 [0] 17:02:00
+19 [0] 17:02:00
+20 [0] 17:02:00
 
 
-TODO
+
+Total väntetid i butiken med ... kassor är ...
+1 [1831] 07:56:41
+2 [761] 16:00:02
+3 [405] 02:43:09
+4 [226] 19:17:35
+5 [120] 00:53:37
+6 [49] 14:48:22
+7 [15] 22:55:24
+8 [3] 06:54:18
+9 [0] 14:15:29
+10 [0] 05:26:49
+11 [0] 02:22:27
+12 [0] 00:55:44
+13 [0] 00:21:51
+14 [0] 00:07:23
+15 [0] 00:01:07
+16 [0] 00:00:18
+17 [0] 00:00:01
+18 [0] 00:00:00
+19 [0] 00:00:00
+20 [0] 00:00:00
+
+
+Vi borde ha 10 kassor öppna!
+Då är den totala persontiden som minst är vid:
+[5] 22:56:34
+
 
 ********************************************************************************************/

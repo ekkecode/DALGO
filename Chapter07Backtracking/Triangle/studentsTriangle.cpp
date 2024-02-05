@@ -26,6 +26,7 @@ std::set<Position> setOfPossibleFinalPositions(State state)
             std::vector<Move> moves = state.legalMoves();
             for (Move move : moves)
             {
+                //State newState = state.nextState(move);
                 states.push_back(state.nextState(move));
             }
         }

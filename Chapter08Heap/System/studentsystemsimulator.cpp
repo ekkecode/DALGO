@@ -121,7 +121,6 @@ void simulate(int antalKassor)
         unsigned int timeToLeave = time + customer.m_timeSpent;
         que.push(Event(customer.m_name, timeToLeave));
 
-
         if (customer.m_name == "Ragnar")
         {
             ragnarLeavesAt = timeToLeave;
@@ -200,7 +199,7 @@ Total väntetid i butiken med ... kassor är ...
 
 
 Vi borde ha 10 kassor öppna!
-Då är den totala persontiden som minst är vid:
+Då är den totala persontiden som minst, det vill säga så lågt som:
 [5] 22:56:34
 
 

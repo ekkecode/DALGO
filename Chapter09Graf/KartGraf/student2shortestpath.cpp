@@ -8,8 +8,9 @@ using namespace std;
 
 
 
-const char* nameOfStudent2(){
-    return "Homer Simpson";
+const char* nameOfStudent2()
+{
+    return "Emil Kronholm";
 }
 
 
@@ -49,18 +50,11 @@ vector<Ixnode> shortestPathBetweenNodes(const std::vector<Node>& graph,
     inputsToBeExamined.push( Input(-1, ixStart, 0.0) );
 
 
-    while (!inputsToBeExamined.empty()){
-
+    while (!inputsToBeExamined.empty())
+    {
         // TODO
     }
-
-
-
 }
-
-
-
-
 
 vector<Ixnode> shortestPathBetweenNodes2(const std::vector<Node>& graph,
                                         Ixnode ixStart, Ixnode ixStop, IVisualFeedback* pFeedback){

@@ -67,6 +67,7 @@ vector<Ixnode> shortestPathBetweenNodes(const std::vector<Node>& graph,
         for (Arc arc : graph[input.m_ixTo]._outputs)
         {
             inputsToBeExamined.push(Input(input.m_ixTo, arc.m_ixDestination, input.m_accumulatedCost + arc.m_cost));
+            pFeedback->knownDistanceToNode(arc.m_ixDestination, input.m_accumulatedCost + arc.m_cost);
         }
     }
 

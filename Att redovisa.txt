@@ -15,6 +15,5 @@ Frivilliga:
 
 10.1 Heap Sort
 
-EJ KLARA:
 10.2 Ickerekursiv Mergesort
 

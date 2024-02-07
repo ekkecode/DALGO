@@ -35,7 +35,6 @@ void MinHeap::insert(int data)
     m_size += 1;
 }
 
-
 int MinHeap::min()
 {
     assert(m_size > 0);

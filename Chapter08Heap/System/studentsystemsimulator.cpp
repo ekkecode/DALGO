@@ -22,7 +22,7 @@ const char* nameOfStudent(){
 
 struct Customer{
     string m_name;
-    int    m_arrival;
+    unsigned long long int m_arrival;
     int    m_timeSpent;
 };
 
@@ -77,7 +77,7 @@ void increaseValue(int &theTime, int newTime){
 
 
 //TODO implementera simulatorn!
-void simulate(int antalKassor)
+void simulate(unsigned long long int antalKassor)
 {
 
     std::ifstream infil;
@@ -95,16 +95,16 @@ void simulate(int antalKassor)
 
     Customer customer;
 
-    // Nedanstående kod är felaktig/ofullständig
     while (infil >> customer)
     {
-
         //Finns inte lediga kassor
         if (!(que.size() < antalKassor))
         {
             time = que.top().m_timeToLeave;
             que.pop();
         }
+
+        //Nu blir customer betjänad
 
         //Ingen väntetid, flytta fram tiden
         if (time < customer.m_arrival)

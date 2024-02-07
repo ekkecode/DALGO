@@ -9,12 +9,6 @@ const char* nameOfStudentMergesort(){
     return "Emil Kronholm";
 }
 
-//   lägg gärna in diverse hjälpfunktioner här!
-
-//  ...
-
-//  ...
-
 void testing()
 {
     float arr[16] = {2, -5, 1, -7, 13, -1, -5, -8, -2, -4, 0, -2, 5, 2, -6, 9};
@@ -28,32 +22,19 @@ void swap(float &a, float&b)
     b = temp;
 }
 
+/*
 void merge(const float* pFromBegin,  const float *pFromEnd, int sizeOfFromRuns, float *pToBegin)
 {
 
     const int size = pFromEnd - pFromBegin;
-    assert(sizeOfFromRuns == size);
 
     int leftIndex = 0;
-    const int leftEndIndex = sizeOfFromRuns/2;
     int rightIndex = sizeOfFromRuns/2;
+
+    const int leftEndIndex = sizeOfFromRuns/2;
     const int rightEndIndex = size;
 
     int index = 0;
-
-    /*cout << "Size: " << size << endl;
-    cout << "That consists of elements: " << endl;
-
-    for (int i = 0; i < rightIndex; i++)
-        cout << pFromBegin[i] << endl;
-
-    cout << "SPLIT" << endl;
-
-    for (int i = rightIndex; i < size; i++)
-        cout << pFromBegin[i] << endl;
-
-
-    cout << endl;*/
 
     while (index < size)
     {
@@ -78,9 +59,6 @@ void merge(const float* pFromBegin,  const float *pFromEnd, int sizeOfFromRuns, 
             continue;
         }
 
-        assert(&pFromBegin[rightIndex] < pFromEnd);
-        assert(&pFromBegin[leftIndex] < pFromEnd);
-
         if (pFromBegin[leftIndex] <= pFromBegin[rightIndex])
         {
 
@@ -96,13 +74,36 @@ void merge(const float* pFromBegin,  const float *pFromEnd, int sizeOfFromRuns, 
 
         index++;
     }
+}*/
 
-   /* cout << "After merge they are now one..." << endl;
 
-    for (int i = 0; i < size; i ++)
-        cout << pToBegin[i] << endl;
+void merge(const float* pFromBegin,  const float *pFromEnd, int sizeOfFromRuns, float *pToBegin)
+{
 
-    cout << endl << endl << endl << endl << endl;*/
+    const int size = pFromEnd - pFromBegin;
+
+    int leftIndex = 0;
+    int rightIndex = sizeOfFromRuns/2;
+
+    const int leftEndIndex = sizeOfFromRuns/2;
+    const int rightEndIndex = size;
+
+    int index = 0;
+
+    while (index < size)
+    {
+        int* smallerLorR;
+
+        //Left or right is empty
+        if (rightIndex >= rightEndIndex || leftIndex >= leftEndIndex)
+            smallerLorR = (rightIndex >= rightEndIndex) ? &leftIndex : &rightIndex;
+        else
+            smallerLorR = (pFromBegin[leftIndex] <= pFromBegin[rightIndex]) ? &leftIndex : &rightIndex;
+
+        pToBegin[index] = pFromBegin[*smallerLorR];
+        index++;
+        *(smallerLorR) += 1;
+    }
 }
 
 void mergesort(float* pBegin, float* pEnd){
@@ -112,10 +113,9 @@ void mergesort(float* pBegin, float* pEnd){
 
     //För size = 16:
     //2, 4, 8, 16
-
     for (int n = 2; n <= size; n*=2)
     {
-        //Ladda över pBegin till pTemp (?)
+        //Kopiera över pBegin till pTemp
         for (int i = 0; i < size; i++)
         {
             pTemp[i] = pBegin[i];
@@ -135,3 +135,6 @@ void mergesort(float* pBegin, float* pEnd){
     }
     delete [] pTemp;
 }
+
+//Std::sort -> 1447 ms
+//Emils otroliga merge: 2146

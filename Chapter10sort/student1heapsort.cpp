@@ -59,7 +59,7 @@ void deleteMax(float* pBegin, float* pEnd)
     percolateDown(pBegin, pBegin, pEnd - 1);
 }
 
-void testing()
+void testing1()
 {
     //Testing testing ?!
 

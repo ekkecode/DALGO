@@ -1,8 +1,20 @@
 Att redovisa:
 
 Obligatoriska:
+8.1 Binär min-Heap
+9.1 Rita graf
 
 Frivilliga:
+7.1 Labyrint rekursion
+7.2 Labyrint FIFO
+7.3 Triangelpyssel
 
+8.3 Simulering av systemkö
 
+9.2 Kortastevägen
+
+10.1 Heap Sort
+
+EJ KLARA:
+10.2 Ickerekursiv Mergesort
 

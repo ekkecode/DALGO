@@ -68,13 +68,14 @@ void MinHeap::percolateDown(int ix)
         if (dataAtIndex(childx) < data)
         {
             n_theArray[parentx] = dataAtIndex(childx);
-            parentx = childx;
-            childx = childx * 2;
-            continue;
+        }
+        else
+        {
+            break;
         }
 
-        //data is smaller than the respective child. No percolate needed.
-        break;
+        parentx = childx;
+        childx = childx * 2;
     }
 
     n_theArray[parentx] = data;

@@ -7,15 +7,27 @@ const int numberOfPossibleStates = 32768;
 
 using namespace std;
 
+bool contains(int input, vector<int> &states)
+{
+    for (int state : states)
+    {
+        if (input == state)
+            return true;
+    }
+    return false;
+}
+
 std::set<Position> setOfPossibleFinalPositions(State state)
 {
     std::set<Position> posOfFinals;
-    std::deque<State> states {state};
+    std::deque<State> statesTodo {state};
 
-    while (states.size() > 0)
+    std::vector<int> previousStates;
+
+    while (statesTodo.size() > 0)
     {
-        State state = states.front();
-        states.pop_front();
+        State state = statesTodo.front();
+        statesTodo.pop_front();
 
         if (state.numberOfBricks() == 1)
         {
@@ -23,18 +35,91 @@ std::set<Position> setOfPossibleFinalPositions(State state)
         }
         else
         {
-            std::vector<Move> moves = state.legalMoves();
-            for (Move move : moves)
+            for (Move move : state.legalMoves())
             {
-                //State newState = state.nextState(move);
-                states.push_back(state.nextState(move));
+                State nextState = state.nextState(move);
+
+                if (!contains(nextState.integerFromState(), previousStates))
+                {
+                    previousStates.push_back(nextState.integerFromState());
+                    statesTodo.push_back(nextState);
+                }
+
             }
         }
     }
     return posOfFinals;
 }
 
+/*std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
+{
+    std::vector<Move> path;
+
+    std::vector<State> stateTODO {state};
+    std::vector<int> previousStates;
+
+    Move previous[numberOfPossibleStates];
+    State previouss[numberOfPossibleStates];
+
+    const int numberOfMoves = state.numberOfBricks() - 1;
+    while (stateTODO.size() > 0)
+    {
+        State state = stateTODO.back();
+        stateTODO.pop_back();
+
+        if ((state.integerFromState() & numberOfPossibleStates) == posOfFinal)
+        {
+            State _state = state;
+
+            for (int i = 0; i < numberOfMoves; i++)
+            {
+                path.push_back(previous[_state.integerFromState()]);
+                _state = previouss[_state.integerFromState()];
+            }
+
+            return path;
+        }
+
+        for (Move move : state.legalMoves())
+        {
+            State nextState = state.nextState(move);
+
+            if (!contains(nextState.integerFromState(), previousStates))
+            {
+                previousStates.push_back(nextState.integerFromState());
+                stateTODO.push_back(nextState);
+
+                previous[nextState.integerFromState()] = move;
+                previouss[nextState.integerFromState()] = state;
+            }
+        }
+    }
+
+    return path;
+}*/
+
 std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
+{
+    //One path to every possible posOfFinal
+    vector<Move> path;
+
+    State startState = state;
+    const int antalDrag = state.numberOfBricks() - 1;
+
+    if ((state & ))
+
+    for (Move move : startState.legalMoves())
+    {
+        for (Move _move : movesInPathToFinal(state.nextState(move), posOfFinal))
+        {
+            path.push_back(_move);
+        }
+    }
+
+    return path;
+}
+
+/*std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
 {
     vector<Move> moves;
 
@@ -42,11 +127,13 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
 
     while (true)
     {
-        for (Move move : state.legalMoves())
+
+        vector<Move> legalMoves = state.legalMoves();
+        for (Move move : legalMoves)
         {
             State nextState = state.nextState(move);
 
-            if(setOfPossibleFinalPositions(nextState).count(posOfFinal) > 0)
+            if(legalMoves.size() == 1 || setOfPossibleFinalPositions(nextState).count(posOfFinal) > 0)
             {
                 moves.push_back(move);
                 state = nextState;
@@ -60,7 +147,7 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
     }
 
     return moves;
-}
+}*/
 
 
 /*

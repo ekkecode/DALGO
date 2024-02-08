@@ -13,15 +13,6 @@ void recursiveFull(int r, int k, IDrawingParent *pImage, QColor colorOld, QColor
     // behöver ej implementeras
 }
 
-void CheckAndRecurve(int r, int k, IDrawingParent *pImage, QColor colorOld, QColor colorNew)
-{
-    if ((*pImage).isInside(r, k) && (*pImage).pixel(r, k) == colorOld)
-    {
-        (*pImage).setPixel(r, k, colorNew);
-        recursiveFill(r, k, pImage, colorOld, colorNew);
-    }
-}
-
 void recursiveFill(int r, int k, IDrawingParent *pImage, QColor colorOld, QColor colorNew)
 {
     //Bryter mot regeln om identiska anrop, men det är okej då inga upprepningar sker då setPixeln
@@ -35,12 +26,12 @@ void recursiveFill(int r, int k, IDrawingParent *pImage, QColor colorOld, QColor
     if ((*pImage).isInside(r, k) && (*pImage).pixel(r, k) == colorOld)
     {
         (*pImage).setPixel(r, k, colorNew);
-        CheckAndRecurve(r + 1, k, pImage, colorOld, colorNew);
+        recursiveFill(r + 1, k, pImage, colorOld, colorNew);
         //Bottom
-        CheckAndRecurve(r - 1, k, pImage, colorOld, colorNew);
+        recursiveFill(r - 1, k, pImage, colorOld, colorNew);
         //Right
-        CheckAndRecurve(r, k + 1, pImage, colorOld, colorNew);
+        recursiveFill(r, k + 1, pImage, colorOld, colorNew);
         //Left
-        CheckAndRecurve(r, k - 1, pImage, colorOld, colorNew);
+        recursiveFill(r, k - 1, pImage, colorOld, colorNew);
     }
 }

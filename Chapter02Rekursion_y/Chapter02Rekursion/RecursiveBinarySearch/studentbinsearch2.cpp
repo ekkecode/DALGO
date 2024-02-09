@@ -10,25 +10,19 @@ const char* nameOfStudent2(){
     return "Emil Kronholm";
 }
 
-
 // Returnerar pekare till det första tal som är >= x, eller
 // pEnd om inget sådant tal finns.
 
 const float* pointerToFirstElementGreaterOrEqualToX(float x, const float* pBegin, const float* pEnd)
 {
     if (pBegin >= pEnd) return pEnd;
-    if (pEnd - pBegin == 1)
-    {
-        return (*pBegin >= x) ? pBegin : pEnd;
-    }
+    if (pEnd - pBegin == 1) return (*pBegin >= x) ? pBegin : pEnd;
 
-    //pMiddle can only equal to pBegin if pEnd-pBegin is 0 or 1.
-    //Both is base cases
-    const float* pMiddle = pBegin + (pEnd - pBegin)/2;
+    const int size = pEnd - pBegin;
+    const float* pMiddle = pBegin + size/2;
 
+    //pMiddle-1 is only outside if pMiddle=OriginalpBegin. It can only equal pBegin if pEnd-pBegin is 0 or 1.Both is base case
     if (*(pMiddle-1) < x && *pMiddle >= x) return pMiddle;
-
-    //Kan inte skriva pMiddle + 1 för kan vi hamn i evighetsloop vid 2 element
     if (x <= *pMiddle) return pointerToFirstElementGreaterOrEqualToX(x, pBegin, pMiddle);
     if (x > *pMiddle) return pointerToFirstElementGreaterOrEqualToX(x, pMiddle, pEnd);
 }

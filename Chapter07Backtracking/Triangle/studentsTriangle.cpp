@@ -51,7 +51,7 @@ std::set<Position> setOfPossibleFinalPositions(State state)
     return posOfFinals;
 }
 
-/*std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
+std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
 {
     std::vector<Move> path;
 
@@ -67,7 +67,8 @@ std::set<Position> setOfPossibleFinalPositions(State state)
         State state = stateTODO.back();
         stateTODO.pop_back();
 
-        if ((state.integerFromState() & numberOfPossibleStates) == posOfFinal)
+        //Trackback
+        if (state.numberOfBricks() == 1 && state.positionOfSingleBrick() == posOfFinal)
         {
             State _state = state;
 
@@ -75,6 +76,16 @@ std::set<Position> setOfPossibleFinalPositions(State state)
             {
                 path.push_back(previous[_state.integerFromState()]);
                 _state = previouss[_state.integerFromState()];
+            }
+
+            //Reverse
+
+            vector<Move> temp = path;
+            int size = temp.size();
+
+            for (int i = 0; i < size; i++)
+            {
+                path[size - i - 1] = temp[i];
             }
 
             return path;
@@ -96,28 +107,8 @@ std::set<Position> setOfPossibleFinalPositions(State state)
     }
 
     return path;
-}*/
-
-std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
-{
-    //One path to every possible posOfFinal
-    vector<Move> path;
-
-    State startState = state;
-    const int antalDrag = state.numberOfBricks() - 1;
-
-    if ((state & ))
-
-    for (Move move : startState.legalMoves())
-    {
-        for (Move _move : movesInPathToFinal(state.nextState(move), posOfFinal))
-        {
-            path.push_back(_move);
-        }
-    }
-
-    return path;
 }
+
 
 /*std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
 {

@@ -197,7 +197,6 @@ Total väntetid i butiken med ... kassor är ...
 19 [0] 00:00:00
 20 [0] 00:00:00
 
-
 Vi borde ha 10 kassor öppna!
 Då är den totala persontiden som minst, det vill säga så lågt som:
 [5] 22:56:34

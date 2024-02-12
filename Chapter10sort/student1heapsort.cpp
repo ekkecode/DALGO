@@ -98,7 +98,6 @@ void heapsort(float* pBegin, float* pEnd)
     }
 
     //Iterativt deleteMax: O(n) * O(logN)
-    int size = pEnd - pBegin;
     for (float* p = pEnd;  p > pBegin + 1; p--)
     {
         float max = *pBegin;
@@ -110,5 +109,4 @@ void heapsort(float* pBegin, float* pEnd)
     }
 
     //Totalt O(n) + O(n logn) = O(n logn)
-
 }

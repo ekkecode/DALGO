@@ -51,11 +51,8 @@ std::set<Position> setOfPossibleFinalPositions(State state)
     return posOfFinals;
 }
 
-<<<<<<< HEAD
-
+/*
 //Kanske effektivast? :(
-=======
->>>>>>> cc621cbde78dd3ef0234d0d5a4359335b0e2ec97
 std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
 {
     std::vector<Move> path;
@@ -71,11 +68,7 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
     {
         State state = stateTODO.back();
         stateTODO.pop_back();
-
-<<<<<<< HEAD
-=======
         //Trackback
->>>>>>> cc621cbde78dd3ef0234d0d5a4359335b0e2ec97
         if (state.numberOfBricks() == 1 && state.positionOfSingleBrick() == posOfFinal)
         {
             State _state = state;
@@ -86,26 +79,13 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
                 _state = previouss[_state.integerFromState()];
             }
 
-<<<<<<< HEAD
-            //reverse
-
-            vector<Move> temp = path;
-
-            const int size = temp.size();
-
-            for (int i = 0; i < size; i++)
-            {
-                path[size-1-i] = temp[i];
-=======
             //Reverse
-
             vector<Move> temp = path;
             int size = temp.size();
 
             for (int i = 0; i < size; i++)
             {
                 path[size - i - 1] = temp[i];
->>>>>>> cc621cbde78dd3ef0234d0d5a4359335b0e2ec97
             }
 
             return path;
@@ -127,28 +107,35 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
     }
 
     return path;
-<<<<<<< HEAD
 }
 
+*/
 
-//SMART
-=======
-<<<<<<< HEAD
-=======
-}*/
 
 bool hasSeen(State state, vector<State> seenStates)
 {
     for (State s : seenStates)
-        if (state == s)
+        if (state.integerFromState() == s.integerFromState())
             return true;
     return false;
 }
 
 std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
 {
+
+
     //One path to every possible posOfFinal
     vector<Move> path;
+
+
+
+
+    state = state.prevState(Move(13, 5));
+
+
+
+    return path;
+
     vector<State> stateTODO {state};
     vector<State> statesSeen {state};
 
@@ -172,17 +159,18 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
             }
         }
 
-        moves[i] = _state.legalMoves()[0]
+        moves[i] = _state.legalMoves()[0];
     }
 
 
     return path;
->>>>>>> b48b756c6650f3e72829922d2c4f6a2bcb8a0bc0
 }
 
 
->>>>>>> cc621cbde78dd3ef0234d0d5a4359335b0e2ec97
-/*std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
+
+//Smart jävel
+/*
+std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
 {
     vector<Move> moves;
 
@@ -212,7 +200,7 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
     return moves;
 }*/
 
-//GAMMAL
+//GAMMAL & rörig :(
 
 /*
 std::vector<Move> movesInPathToFinal(State _state, Position posOfFinal)

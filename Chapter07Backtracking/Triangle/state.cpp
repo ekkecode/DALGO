@@ -19,7 +19,7 @@ indexnummer enligt nedanstående:
 
 static int s_posFromDirAndPrevpos[3][16]
     //00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15
-= { {15,0,15, 1, 2,15, 3, 4, 5,15, 6, 7, 8, 9,15,15},
+= { { 15,0, 15, 1, 2,15, 3, 4, 5,15, 6, 7, 8, 9,15,15},
     {15,2,15, 4, 5,15, 7, 8, 9,15,11,12,13,14,15,15},
     { 2,4, 5, 7, 8, 9,11,12,13,14,15,15,15,15,15,15}} ;
 
@@ -53,10 +53,6 @@ Position posdestinationFromPosAndDirection(Position position, int direction)
 {
   return posNeighbour( posNeighbour(position,direction), direction );
 }
-
-
-
-
 
 State::State(void)
 {
@@ -117,7 +113,7 @@ VERSION:  2004-08-17/2017-10-01 RAG
 UPPGIFT:  Returnerar ett objekt som beskriver alla möjliga
           drag av pinne pos i detta tillstÂnd
 ************************************************************/
-vector<Move>  State::legalMoves(Position position)
+vector<Move> State::legalMoves(Position position)
 {
     vector<Move>  moves;
     if (isOccupied(position)){
@@ -131,8 +127,6 @@ vector<Move>  State::legalMoves(Position position)
     }
     return moves;
 }
-
-
 
 /************************************************************
 ANROP:    int nr = state.numberPins();  // 0..15
@@ -165,6 +159,23 @@ State State::nextState(const Move& move)
     return s;
 }// nextState
 
+State State::prevState(const Move& move)
+{
+    //Kollar om det är legal! :)
+    int ix1   = move.m_pos;
+    int ixMid = posNeighbour( ix1, move.m_direction +3%6);
+    int ix2   = posNeighbour( ixMid, move.m_direction +3%6);
+
+    assert(isOccupied(ix1));
+    assert(isFree(ixMid));
+    assert(isFree(ix2));
+
+    State s = *this;
+    s.clearPos(ix1);
+    s.setPos( ixMid );
+    s.setPos( ix2 );
+    return s;
+}// nextState
 
 /************************************************************
 ANROP:    int ix = state.getFinalIndex()

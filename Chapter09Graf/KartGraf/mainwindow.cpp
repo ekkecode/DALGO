@@ -42,7 +42,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::knownDistanceToNode(Ixnode ixNode, float dist)
 {
-    // Denna v ersion  anropas av ragnarsTest
+    // Denna v ersion anropas av ragnarsTest
     assert( dist >= _distanceLastKnown );
     _distanceLastKnown = dist;
 

@@ -24,6 +24,7 @@ public:
     std::vector<Move> legalMoves(Position position);
     int numberOfBricks();
     State nextState(const Move& move);
+    State prevState(const Move& move);
     Position positionOfSingleBrick();
     bool isLegal(Move move);
 };

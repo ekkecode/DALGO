@@ -62,7 +62,6 @@ vector<Ixnode> shortestPathBetweenNodes(const std::vector<Node>& graph,
         if (infoAboutNode[input.m_ixTo].m_hasKnownDistance) continue;
 
         infoAboutNode[input.m_ixTo].m_ixPrevious = input.m_ixFrom;
-
         infoAboutNode[input.m_ixTo].m_hasKnownDistance = true;
         pFeedback->knownDistanceToNode(input.m_ixTo, input.m_accumulatedCost);
 
@@ -79,7 +78,6 @@ vector<Ixnode> shortestPathBetweenNodes(const std::vector<Node>& graph,
         shortestPath.push_back(pathx);
         pathx = infoAboutNode[pathx].m_ixPrevious;
     }
-
 
     return shortestPath;
 }

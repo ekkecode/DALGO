@@ -50,16 +50,11 @@ bool foundShortestPathToGoalFIFO(IMaze *pMaze, int r, int k)
         {
             //Loop back through rkPrevious
             RK temp = rk;
-
-            pMaze->indicateThatRKIsOnPath(rk.m_r, rk.m_k);
             while (temp.m_r != r || temp.m_k != k)
             {
                 pMaze->indicateThatRKIsOnPath(temp.m_r, temp.m_k);
                 temp = rkPrevious[temp.m_r][temp.m_k];
             }
-
-            temp = rkPrevious[temp.m_r][temp.m_k];
-
             return true;
         }
 

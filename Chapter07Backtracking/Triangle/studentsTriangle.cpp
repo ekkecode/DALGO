@@ -3,6 +3,8 @@
 #include <deque>
 #include <iostream>
 
+#include <QDebug>
+
 const int numberOfPossibleStates = 32768;
 
 using namespace std;
@@ -22,6 +24,7 @@ std::set<Position> setOfPossibleFinalPositions(State state)
     std::set<Position> posOfFinals;
     std::deque<State> statesTodo {state};
 
+    //Make sure we don't calculate the same way twice
     std::vector<int> previousStates;
 
     while (statesTodo.size() > 0)
@@ -51,8 +54,22 @@ std::set<Position> setOfPossibleFinalPositions(State state)
     return posOfFinals;
 }
 
+bool hasPath(State state, Position finalPos)
+{
+    if (state.integerFromState() == 1 << (finalPos)) return true;
+
+    for (Move move : state.legalMoves())
+    {
+        if (hasPath(state.nextState(move), finalPos))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 /*
-//Kanske effektivast? :(
 std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
 {
     std::vector<Move> path;
@@ -107,10 +124,62 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
     }
 
     return path;
-}
+}*/
+/*
+std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
+{
+    std::vector<Move> path;
 
-*/
+    std::vector<State> stateTODO {state};
+    std::vector<int> previousStates;
 
+    Move previous[numberOfPossibleStates];
+
+    const int numberOfMoves = state.numberOfBricks() - 1;
+    while (stateTODO.size() > 0)
+    {
+        State state = stateTODO.back();
+        stateTODO.pop_back();
+        //Trackback
+        if (state.numberOfBricks() == 1 && state.positionOfSingleBrick() == posOfFinal)
+        {
+            State _state = state;
+
+            for (int i = 0; i < numberOfMoves; i++)
+            {
+                Move preMove = previous[_state.integerFromState()];
+                path.push_back(preMove);
+                _state = _state.prevState(preMove);
+            }
+
+            //Reverse
+            vector<Move> temp = path;
+            int size = temp.size();
+
+            for (int i = 0; i < size; i++)
+            {
+                path[size - i - 1] = temp[i];
+            }
+
+            return path;
+        }
+
+        for (Move move : state.legalMoves())
+        {
+            State nextState = state.nextState(move);
+
+            if (!contains(nextState.integerFromState(), previousStates))
+            {
+                previousStates.push_back(nextState.integerFromState());
+                stateTODO.push_back(nextState);
+
+                previous[nextState.integerFromState()] = move;
+            }
+        }
+    }
+
+    return path;
+}*/
 
 bool hasSeen(State state, vector<State> seenStates)
 {
@@ -119,63 +188,11 @@ bool hasSeen(State state, vector<State> seenStates)
             return true;
     return false;
 }
-
-std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
-{
-
-
-    //One path to every possible posOfFinal
-    vector<Move> path;
-
-
-
-
-    state = state.prevState(Move(13, 5));
-
-
-
-    return path;
-
-    vector<State> stateTODO {state};
-    vector<State> statesSeen {state};
-
-    State startState = state;
-    const int antalDrag = state.numberOfBricks() - 1;
-
-    Move moves[antalDrag];
-    State states[antalDrag + 1];
-    states[0] = state;
-
-    for (int i = 0; i < antalDrag; i++)
-    {
-        State _state = states[i];
-        vector<Move> moves = _state.legalMoves();
-
-        for (Move move : moves)
-        {
-            if (!hasSeen(_state.nextState(move), statesSeen))
-            {
-
-            }
-        }
-
-        moves[i] = _state.legalMoves()[0];
-    }
-
-
-    return path;
-}
-
-
-
-//Smart jävel
 /*
 std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
 {
     vector<Move> moves;
-
-    int startSize = moves.size();
-
+    int startSize = 0;
 
     while (true)
     {
@@ -184,7 +201,7 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
         {
             State nextState = state.nextState(move);
 
-            if(legalMoves.size() == 1 || setOfPossibleFinalPositions(nextState).count(posOfFinal) > 0)
+            if(legalMoves.size() == 1 || hasPath(nextState, posOfFinal))
             {
                 moves.push_back(move);
                 state = nextState;
@@ -193,6 +210,7 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
             }
         }
 
+        //Om startsize == moves.size har vi inte hittat ett till drag
         if (startSize == moves.size()) break;
         else startSize = moves.size();
     }
@@ -200,57 +218,40 @@ std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
     return moves;
 }*/
 
-//GAMMAL & rörig :(
-
-/*
-std::vector<Move> movesInPathToFinal(State _state, Position posOfFinal)
+std::vector<Move> movesInPathToFinal_(State state, Position posOfFinal)
 {
+    vector<Move> moves;
 
-    std::vector<Move> path;
-    std::deque<Move> _path;
-    std::deque<State> states {_state};
-
-    std::vector<Move> prevState(numberOfPossibleStates);
-    std::vector<State> prevStateSTATE(numberOfPossibleStates);
-
-    while (states.size() > 0)
+    for (Move move : state.legalMoves())
     {
-        State state = states.front();
-        states.pop_front();
+        State nextState = state.nextState(move);
 
-
-
-        if (state.numberOfBricks() == 1 && state.positionOfSingleBrick() == posOfFinal)
+        if (hasPath(nextState, posOfFinal))
         {
-            State temp = state;
-
-            while (temp.integerFromState() != _state.integerFromState())
-            {
-                _path.push_front(prevState[temp.integerFromState()]);
-                temp = prevStateSTATE[temp.integerFromState()];
-            }
-
+            moves = movesInPathToFinal_(nextState, posOfFinal);
+            moves.push_back(move);
             break;
-        }
-
-        else
-        {
-            std::vector<Move> moves = state.legalMoves();
-            for (Move move : moves)
-            {
-                State nextState = state.nextState(move);
-                states.push_back(nextState);
-
-                prevState[nextState.integerFromState()] = move;
-                prevStateSTATE[nextState.integerFromState()] = state;
-            }
         }
     }
 
-    for (Move move: _path)
-        path.push_back(move);
-
-
-    return path;
+    return moves;
 }
-*/
+
+std::vector<Move> movesInPathToFinal(State state, Position posOfFinal)
+{
+    vector<Move> moves = movesInPathToFinal_(state, posOfFinal);
+
+    //reverse
+    vector<Move> temp = moves;
+    int size = temp.size();
+
+    for (int i = 0; i < size; i++)
+    {
+        moves[size - i - 1] = temp[i];
+    }
+
+    return moves;
+
+
+}
+

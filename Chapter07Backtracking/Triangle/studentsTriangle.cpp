@@ -47,7 +47,6 @@ std::set<Position> setOfPossibleFinalPositions(State state)
                     previousStates.push_back(nextState.integerFromState());
                     statesTodo.push_back(nextState);
                 }
-
             }
         }
     }
